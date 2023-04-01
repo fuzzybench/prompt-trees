@@ -2,7 +2,7 @@ import torch
 from diffusers import StableDiffusionPipeline, EulerDiscreteScheduler
 
 # Generate an image from a prompt
-def generate_image(prompt, output_dir, steps, guidance_scale):
+def generate_image(prompt):
     model_id = "stabilityai/stable-diffusion-2-1"
 
     # Use the Euler scheduler here instead
@@ -10,7 +10,7 @@ def generate_image(prompt, output_dir, steps, guidance_scale):
     pipe = StableDiffusionPipeline.from_pretrained(model_id, scheduler=scheduler, torch_dtype=torch.float16)
     pipe = pipe.to("cuda")
 
-    image = pipe(prompt, num_inference_steps=steps, guidance_scale=guidance_scale).images[0]
+    image = pipe(prompt, num_inference_steps=100, guidance_scale=7.5).images[0]
     return image
 
 def save_image(prompt, image, output_dir):
