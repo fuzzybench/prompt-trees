@@ -49,7 +49,7 @@ if torch.__version__ >= "2":
 
 
 def generate_prompts(prompt_estimate, prompt_expansion):
-    instruction = "Write 2 unique descriptive image caption prompts that contain an artistic style of the image that will be used to generate an image for the following image description: " + prompt_estimate + ". format the data as follows: prompt1, prompt2. Do not return anything other than prompt1:prompt2."
+    instruction = "Write 2 unique descriptive image caption prompts that contain an artistic style of the image that will be used to generate an image for the following image description: " + prompt_estimate + ". format the data as follows: prompt1, prompt2. Do not return anything other than prompt1|prompt2. use the  "+" | "+" symbol as the prompt separator"
     input_ctxt = "you are making 2 unique prompts to generate an image from. The prompts contain captions, descriptions, and styles of the image. You are to return the data in the described formatted way"  # For some tasks, you can provide an input context to help the model generate a better response.
 
     prompt = generate_prompt(instruction, input_ctxt)
@@ -65,7 +65,7 @@ def generate_prompts(prompt_estimate, prompt_expansion):
         )
 
     response = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
-    response = response.split(":")
+    response = response.split("|")
     print(response)
 
 
